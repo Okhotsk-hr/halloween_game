@@ -10,6 +10,11 @@ int mode_num = 0;
 
 void setup() {
     size(900,500);
+    loadQuizData();
+    
+    //日本語文字表示
+    PFont font = createFont("Meiryo", 50);
+    textFont(font);
     
     //プレイヤーの初期数値設定
     player_w = 50;
@@ -26,12 +31,14 @@ void draw() {
     
     switch(field) {
         case "street":
+            //フィールドがstreet
             street_house();
             rect(player_x,player_y,player_w,player_h);
             print(player_x + ":" + player_y + "\n");
             break;
         case "house":
-            //println("家の中");
+            //フィールドがhouse
+            quiz();
             break;
         
     }
@@ -47,7 +54,7 @@ void keyPressed() {
     if (field ==  "street") {
         switch(keyCode) {
             case 38 :
-                // 上移動
+                // 上矢印：上移動
                 player_y -= dxy;
                 if (player_x!= 450) {
                     if (player_y ==  360) {
@@ -61,21 +68,21 @@ void keyPressed() {
                 }
                 break;
             case 40:
-                //下移動
+                //下矢印：下移動
                 player_y += dxy;
                 if (player_x!= 450 && player_y ==  260) {
                     player_y -= dxy;
                 }
                 break;
             case 39:
-                //右移動
+                //右矢印：右移動
                 player_x += dxy;
                 if (player_y <=  360 &&  player_y >=  260 &&  player_x ==  500) {
                     player_x -= dxy;
                 }
                 break;
             case 37:
-                //左移動
+                //左矢印：左移動
                 player_x -= dxy;
                 if (player_y <=  360 &&  player_y >=  260 &&  player_x ==  400) {
                     player_x += dxy;
@@ -94,6 +101,10 @@ void keyPressed() {
     }
     
     if (field == "house") {
+        if (key >= '1' && key <= '4') {
+            answerQuiz(key - '0');
+            return;
+        }
         switch(keyCode) {
             case 69:
                 field = "street";
