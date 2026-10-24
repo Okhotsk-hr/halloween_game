@@ -2,6 +2,7 @@ int house_x = 100;
 int house_y = 100;
 
 void street_house() {
+    fill(255);
     rect(20,20,house_x,house_y);
     rect(150,20,house_x,house_y);
     rect(280,20,house_x,house_y);
